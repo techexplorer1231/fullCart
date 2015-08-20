@@ -5,12 +5,15 @@
     'ngCookies',
     'ngResource',
     'ngSanitize',
+    'ngAnimate',
+    'ngMessages',
     'btford.socket-io',
     'ui.router',
     'ui.bootstrap'
 
   ])
     .constant('toastr', window.toastr)
+    .constant('_', window._)
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, toastr) {
       $urlRouterProvider
         .otherwise('/');
@@ -20,6 +23,7 @@
 
       toastr.options.timeOut = 4000;
       toastr.options.positionClass = 'toast-bottom-right';
+      toastr.options.progressBar = true;
     })
 
     .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {

@@ -6,34 +6,35 @@
       <h1>Change Password</h1>
     </div>
     <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+      <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
 
-        <div class="form-group">
-          <label>Current Password</label>
-
-          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ errors.other }}
-          </p>
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.oldPassword.$error)">
+          <label>Old Password</label>
+          <input type="password" required name="oldPassword" class="form-control" ng-model="vm.user.oldPassword">
+          <div ng-messages="form.oldPassword.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+            <div ng-message="mongoose" class="control-label">Incorrect Old Password</div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>New Password</label>
-
-          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
-            Password must be at least 3 characters.
-          </p>
+        <div class="form-group" ng-class="vm.validationClass(form.newPassword.$error)">
+          <label>Password</label>
+          <input type="password" required name="newPassword" class="form-control" ng-model="vm.user.newPassword">
+          <div ng-messages="form.newPassword.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
         </div>
 
-        <p class="help-block"> {{ message }} </p>
+        <div class="alert alert-danger animate-validation-error" ng-if="!!vm.errors.other" role="alert"> <strong>{{ vm.errors.other }}</strong> </div>
+        <div class="alert alert-success animate-validation-error" ng-if="!!vm.message" role="alert"> <strong>{{ vm.message }}</strong> </div>
 
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        <div>
+          <button class="btn btn-primary btn-lg btn-login" type="submit">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   </div>
+  <hr>
 </div>

@@ -10,10 +10,10 @@ angular.module('fullCartApp')
     });
 
     $scope.addThing = function() {
-      if($scope.newThing === '') {
+      if ($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
+      $http.post('/api/things', {name: $scope.newThing});
       $scope.newThing = '';
     };
 

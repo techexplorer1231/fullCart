@@ -1,29 +1,36 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('fullCartApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
-    $scope.user = {};
-    $scope.errors = {};
+  angular
+    .module('fullCartApp')
+    .controller('LoginCtrl', LoginCtrl);
 
-    $scope.login = function(form) {
-      $scope.submitted = true;
+  /* @ngInject */
+  function LoginCtrl(Auth, $location, $window, common) {
+    /* jshint validthis:true */
+    var vm = this;
+    vm.user = {};
+    vm.validationClass = common.validationClass;
+    vm.login = login;
 
-      if(form.$valid) {
-        Auth.login({
-          email: $scope.user.email,
-          password: $scope.user.password
-        })
-        .then( function() {
+    vm.user = {};
+    vm.errors = {};
+
+    function login(form) {
+      Auth.login({
+          email: vm.user.email,
+          password: vm.user.password
+        }).then(function () {
           // Logged in, redirect to home
           $location.path('/');
-        })
-        .catch( function(err) {
-          $scope.errors.other = err.message;
+        })['catch'](function (err) {
+          vm.errors.other = err.message;
         });
-      }
     };
 
-    $scope.loginOauth = function(provider) {
+    vm.loginOauth = function (provider) {
       $window.location.href = '/auth/' + provider;
     };
-  });
+  }
+})();
+

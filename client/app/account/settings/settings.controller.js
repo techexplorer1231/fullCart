@@ -1,21 +1,28 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('fullCartApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth) {
-    $scope.errors = {};
+  angular
+    .module('fullCartApp')
+    .controller('SettingsCtrl', SettingsCtrl);
 
-    $scope.changePassword = function(form) {
-      $scope.submitted = true;
-      if(form.$valid) {
-        Auth.changePassword( $scope.user.oldPassword, $scope.user.newPassword )
-        .then( function() {
-          $scope.message = 'Password successfully changed.';
+  /* @ngInject */
+  function SettingsCtrl(Auth, User, common) {
+    /* jshint validthis:true */
+    var vm = this;
+    vm.errors = {};
+    vm.changePassword = changePassword;
+    vm.validationClass = common.validationClass;
+
+    function changePassword(form) {
+      Auth.changePassword(vm.user.oldPassword, vm.user.newPassword)
+        .then(function () {
+          vm.message = 'Password successfully changed.';
         })
-        .catch( function() {
-          form.password.$setValidity('mongoose', false);
-          $scope.errors.other = 'Incorrect password';
-          $scope.message = '';
+        .catch(function () {
+          vm.form.oldPassword.$setValidity('mongoose', false);
+          vm.errors.other = 'Incorrect old password';
+          vm.message = '';
         });
-      }
-		};
-  });
+    }
+  }
+})();

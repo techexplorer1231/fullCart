@@ -5,10 +5,8 @@
     .module('fullCartApp')
     .factory('common', common);
 
-  common.$inject = ['$location', '$q', '$rootScope', '$timeout', 'logger'];
-
   /* @ngInject */
-  function common($location, $q, $rootScope, $timeout, logger) {
+  function common($location, $q, $rootScope, $timeout, logger, _) {
     var throttles = {};
 
     var service = {
@@ -16,13 +14,15 @@
       $broadcast: $broadcast,
       $q: $q,
       $timeout: $timeout,
+      _: _,
       // generic
       createSearchThrottle: createSearchThrottle,
       debouncedThrottle: debouncedThrottle,
       isNumber: isNumber,
       logger: logger, // for accessibility
       replaceLocationUrlGuidWithId: replaceLocationUrlGuidWithId,
-      textContains: textContains
+      textContains: textContains,
+      validationClass: validationClass
     };
 
     return service;
@@ -117,5 +117,19 @@
     function textContains(text, searchText) {
       return text && -1 !== text.toLowerCase().indexOf(searchText.toLowerCase());
     }
+
+    /**
+     * checks if the field is valid or not
+     * @param {object} value get form.field.$error
+     * @returns {String} return if form field valid valid or not
+     */
+    function validationClass(value) {
+      if (_.isEmpty(value)) {
+        return 'has-success';
+      }else {
+        return 'has-error';
+      }
+    }
+
   }
 })();
