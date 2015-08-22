@@ -1,0 +1,186 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Add Product</h1>
+    </div>
+    <div class="col-xs-12">
+      <form class="form" name="form" ng-submit="vm.addProduct(form)" novalidate>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.title.$error)">
+          <label>Title</label>
+          <input type="text" required name="title" class="form-control" ng-model="vm.product.title">
+
+          <div ng-messages="form.title.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.category.$error)">
+          <label>Category</label>
+          <select class="form-control" ng-options="category._id as category.title for category in vm.categories"
+                  ng-model="vm.product.parent" name="category" required>
+          </select>
+
+          <div ng-messages="form.category.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.price.$error)">
+          <label>Product Price</label>
+          <input type="text" required name="price" class="form-control" ng-model="vm.product.price">
+
+          <div ng-messages="form.price.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.sale_price.$error)">
+          <label>Product Sale Price</label>
+          <input type="text" required name="sale_price" class="form-control" ng-model="vm.product.sale_price">
+
+          <div ng-messages="form.sale_price.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.stock_level.$error)">
+          <label>Stock Level</label>
+          <input type="number" required name="stock_level" class="form-control" ng-model="vm.product.stock_level">
+
+          <div ng-messages="form.stock_level.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.weight.$error)">
+          <label>Weight</label>
+          <input type="text" required name="weight" class="form-control" ng-model="vm.product.weight">
+
+          <div ng-messages="form.weight.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.height.$error)">
+          <label>Height</label>
+          <input type="text" required name="height" class="form-control" ng-model="vm.product.height">
+
+          <div ng-messages="form.height.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.width.$error)">
+          <label>Width</label>
+          <input type="text" required name="width" class="form-control" ng-model="vm.product.width">
+
+          <div ng-messages="form.width.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.depth.$error)">
+          <label>Depth</label>
+          <input type="text" required name="depth" class="form-control" ng-model="vm.product.depth">
+
+          <div ng-messages="form.depth.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.brand.$error)">
+          <label>Brand</label>
+          <select class="form-control" ng-options="brand._id as brand.title for brand in vm.brands"
+                  ng-model="vm.product.brand" name="brand" required>
+          </select>
+
+          <div ng-messages="form.brand.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.tax_band.$error)">
+          <label>Tax Band</label>
+          <select class="form-control" ng-options="tax_band.key as tax_band.value for tax_band in vm.taxBand"
+                  ng-model="vm.product.tax_band" name="tax_band" required>
+          </select>
+
+          <div ng-messages="form.tax_band.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.catalog_only.$error)">
+          <label>Catalog Only</label>
+          <select class="form-control" ng-options="parent.key as parent.value for parent in vm.catalogOnlyStatus"
+                  ng-model="vm.product.catalog_only" name="catalog_only" required>
+          </select>
+
+          <div ng-messages="form.catalog_only.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.requires_shipping.$error)">
+          <label>Requires Shipping</label>
+          <select class="form-control" ng-options="shipping.key as shipping.value for shipping in vm.requiresShipping"
+                  ng-model="vm.product.requires_shipping" name="requires_shipping" required>
+          </select>
+
+          <div ng-messages="form.requires_shipping.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.status.$error)">
+          <label>Product Status</label>
+          <select class="form-control" ng-options="status.key as status.value for status in vm.productStatus"
+                  ng-model="vm.product.status" name="status" required>
+          </select>
+
+          <div ng-messages="form.status.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.stock_status.$error)">
+          <label>Stock Status</label>
+          <select class="form-control"
+                  ng-options="stock_status.key as stock_status.value for stock_status in vm.stockStatus"
+                  ng-model="vm.product.stock_status" name="stock_status" required>
+          </select>
+
+          <div ng-messages="form.stock_status.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="vm.validationClass(form.description.$error)">
+          <label>Description</label>
+          <textarea class="form-control" ng-model="vm.product.description" columns="1" rows="2" name="description"
+                    required ng-maxlength="200"></textarea>
+
+          <div ng-messages="form.description.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+            <div ng-message="maxlength" class="control-label">Maximum 150 characters allowed</div>
+          </div>
+        </div>
+
+        <div>
+          <cart-upload-image></cart-upload-image>
+        </div>
+
+        <div class="col-xs-12 alert alert-danger animate-validation-error" ng-if="!!vm.errors.other" role="alert">
+          <strong>{{ vm.errors.other }}</strong></div>
+        <div>
+          <button class="btn btn-primary btn-lg btn-login" type="submit" ng-disabled="form.$invalid">
+            Add Category
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,27 +1,22 @@
 'use strict';
 
 angular.module('fullCartApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', function (dataservice, common) {
+    /* jshint validthis:true */
+    const vm = this;
+    vm.products = [];
+    activate();
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
-    });
+    function activate() {
+      return getProducts().then(function() {
+        common.logger.info('Activated products View');
+      });
+    }
 
-    $scope.addThing = function() {
-      if ($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', {name: $scope.newThing});
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
+    function getProducts() {
+      return dataservice.getProducts().then(function(data) {
+        vm.products = data;
+        return vm.products;
+      });
+    }
   });

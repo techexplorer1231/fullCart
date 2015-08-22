@@ -3,20 +3,27 @@
 
   angular
     .module('fullCartApp')
-    .controller('AdminCtrl', AdminCtrl);
+    .controller('AdminController', AdminController);
 
   /* @ngInject */
-  function AdminCtrl($scope, $http, Auth, User) {
+  function AdminController($http, Auth, User, common) {
     // Use the User $resource to fetch all users
-    $scope.users = User.query();
+    /* jshint validthis:true */
+    const vm = this;
+    vm.users = User.query();
+    activate();
 
-    $scope.delete = function (user) {
+    function activate() {
+      common.logger.info('Activated admin View');
+    }
+
+    vm.delete = function (user) {
       User.remove({
         id: user._id
       });
-      angular.forEach($scope.users, function (u, i) {
+      angular.forEach(vm.users, function (u, i) {
         if (u === user) {
-          $scope.users.splice(i, 1);
+          vm.users.splice(i, 1);
         }
       });
     };

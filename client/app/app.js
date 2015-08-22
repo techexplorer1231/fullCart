@@ -9,7 +9,8 @@
     'ngMessages',
     'btford.socket-io',
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angularFileUpload'
 
   ])
     .constant('toastr', window.toastr)
@@ -23,7 +24,6 @@
 
       toastr.options.timeOut = 4000;
       toastr.options.positionClass = 'toast-bottom-right';
-      toastr.options.progressBar = true;
     })
 
     .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {

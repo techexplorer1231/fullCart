@@ -24,7 +24,7 @@ Thing.find({}).remove(function() {
   },  {
     name : 'Optimized Build',
     info : 'Build process packs up your templates as a single JavaScript payload, minifies your scripts/css/images, and rewrites asset names for caching.'
-  },{
+  }, {
     name : 'Deployment Ready',
     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   });

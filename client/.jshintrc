@@ -51,6 +51,7 @@
   "noyield": false,
   "browser": true,
   "node": true,
+  "esnext": true,
   "globals": {
     "angular": false,
     "$": false,

@@ -1,0 +1,56 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Add Category</h1>
+    </div>
+    <div>
+      <form class="form" name="form" ng-submit="vm.addCategory(form)" novalidate>
+
+        <div class="form-group has-feedback col-xs-12" ng-class="vm.validationClass(form.title.$error)">
+          <label>Title</label>
+          <input type="text" required name="title" class="form-control" ng-model="vm.category.title">
+          <div ng-messages="form.title.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback col-xs-12 col-sm-6" ng-class="vm.validationClass(form.category.$error)">
+          <label>Parent Category</label>
+          <select class="form-control" ng-options="parent for parent in vm.parentCategories" ng-model="vm.category.parent" name="category" required>
+          </select>
+          <div ng-messages="form.category.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback col-xs-12 col-sm-6" ng-class="vm.validationClass(form.status.$error)">
+          <label>Category Status</label>
+          <select class="form-control" ng-options="status.key as status.value for status in vm.categoriesStatus" ng-model="vm.category.status" name="status" required>
+          </select>
+          <div ng-messages="form.status.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback col-xs-12" ng-class="vm.validationClass(form.description.$error)">
+          <label>Description</label>
+          <textarea class="form-control" ng-model="vm.category.description" columns="1" rows="2" name="description" required ng-maxlength="200"></textarea>
+          <div ng-messages="form.description.$error">
+            <div ng-message="required" class="control-label">This is required.</div>
+            <div ng-message="maxlength" class="control-label">Maximum 150 characters allowed</div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 alert alert-danger animate-validation-error" ng-if="!!vm.errors.other" role="alert"> <strong>{{ vm.errors.other }}</strong> </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12">
+          <button class="btn btn-primary btn-lg btn-login" type="submit" ng-disabled="form.$invalid">
+            Add Category
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
