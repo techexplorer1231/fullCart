@@ -2,8 +2,7 @@
 
 var _ = require('lodash');
 var Image = require('./image.model');
-var multer  = require('multer');
-var upload = multer();
+var multer = require('multer');
 
 // Get list of images
 exports.index = function(req, res) {
@@ -22,13 +21,17 @@ exports.show = function(req, res) {
   });
 };
 
+function cpUpload(req, res, next) {
+  console.log('here');
+  multer({dest: 'uploads/'})
+  next();
+}
+
 // Creates a new image in the DB.
-exports.create = (upload.array(), function(req, res) {
-  Image.create(req.body, function(err, image) {
-    if (err) { return handleError(res, err); }
-    return res.status(201).json(image);
-  });
-});
+exports.create = [cpUpload , function(req, res) {
+  console.log('there');
+  res.status(204).end()
+}]
 
 // Updates an existing image in the DB.
 exports.update = function(req, res) {
