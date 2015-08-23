@@ -2,10 +2,6 @@
 
 var _ = require('lodash');
 var Image = require('./image.model');
-var bodyParser = require('body-parser');
-var multer  = require('multer');
-var upload = multer({dest: './upload/'});
-var type = upload.single('file');
 
 // Get list of images
 exports.index = function(req, res) {
@@ -25,11 +21,9 @@ exports.show = function(req, res) {
 };
 
 // Create a single image
-exports.create = (type, function(req, res) {
-  console.log('in main', req.body);
-  console.log('in upload middleware', req.files);
-  res.status(204).end();
-})
+exports.create = function(req, res) {
+  res.status(201).end();
+}
 
 // Updates an existing image in the DB.
 exports.update = function(req, res) {
