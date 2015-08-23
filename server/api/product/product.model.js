@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  shortid = require('shortid'),
+  uuid = require('node-uuid'),
   objectid = Schema.Types.ObjectId;
 
 var ProductSchema = new Schema({
@@ -37,12 +37,12 @@ var ProductSchema = new Schema({
   sku: {
     type: String,
     required: true,
-    default: shortid.generate
+    default: uuid.v1()
   },
   slug: {
     type: String,
     required: true,
-    default: shortid.generate
+    default: uuid.v1()
   },
   sale_price: {
     type: Number,

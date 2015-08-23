@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  shortid = require('shortid'),
+  uuid = require('node-uuid'),
   objectid = Schema.Types.ObjectId;
 
 var CategorySchema = new Schema({
@@ -18,7 +18,7 @@ var CategorySchema = new Schema({
   slug: {
     type: String,
     required: true,
-    default: shortid.generate
+    default: uuid.v1()
   },
   /*Choices available are 0 (Draft), 1 (Live).*/
   status: {

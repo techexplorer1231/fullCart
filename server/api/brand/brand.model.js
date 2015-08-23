@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
   shortid = require('shortid'),
+  uuid = require('node-uuid'),
   Schema = mongoose.Schema;
 
 var BrandSchema = new Schema({
@@ -16,7 +17,7 @@ var BrandSchema = new Schema({
   slug: {
     type: String,
     required: true,
-    default: shortid.generate
+    default: uuid.v1()
   },
   /*Choices available are 0 (Draft), 1 (Live).*/
   status: {

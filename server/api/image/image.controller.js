@@ -22,6 +22,7 @@ exports.show = function(req, res) {
 
 // Create a single image
 exports.create = function(req, res) {
+  console.log(req.file);
   res.status(201).end();
 }
 
