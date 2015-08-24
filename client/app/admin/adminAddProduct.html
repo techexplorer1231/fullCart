@@ -169,14 +169,13 @@
           </div>
         </div>
 
-        <div>
-          <cart-upload-image></cart-upload-image>
-        </div>
+        <cart-upload-image></cart-upload-image>
 
         <div class="col-xs-12 alert alert-danger animate-validation-error" ng-if="!!vm.errors.other" role="alert">
           <strong>{{ vm.errors.other }}</strong></div>
         <div>
-          <button class="btn btn-primary btn-lg btn-login" type="submit" ng-disabled="form.$invalid">
+          <button class="btn btn-primary btn-lg btn-login" type="submit">
+            <!-- ng-disabled="form.$invalid"-->
             Add Category
           </button>
         </div>

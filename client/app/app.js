@@ -15,6 +15,7 @@
   ])
     .constant('toastr', window.toastr)
     .constant('_', window._)
+    .constant('uuid', window.uuid)
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, toastr) {
       $urlRouterProvider
         .otherwise('/');

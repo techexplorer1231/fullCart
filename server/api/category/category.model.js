@@ -18,7 +18,7 @@ var CategorySchema = new Schema({
   slug: {
     type: String,
     required: true,
-    default: uuid.v1()
+    default: uuid.v4()
   },
   /*Choices available are 0 (Draft), 1 (Live).*/
   status: {

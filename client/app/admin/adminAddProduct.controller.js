@@ -36,6 +36,7 @@
      * @returns {Promise.<Object>}
      */
     function addProduct() {
+      vm.directiveFn = directiveFn;
       return dataservice.addProduct(vm.product)
         .then(function (data) {
           common.logger.info('Product added successfully');

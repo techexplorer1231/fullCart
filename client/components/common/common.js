@@ -6,23 +6,25 @@
     .factory('common', common);
 
   /* @ngInject */
-  function common($location, $q, $rootScope, $timeout, logger, _) {
+  function common($location, $q, $rootScope, $timeout, logger, _, uuid) {
     var throttles = {};
 
     var service = {
       // common angular dependencies
-      $broadcast: $broadcast,
-      $q: $q,
-      $timeout: $timeout,
-      _: _,
+      $broadcast,
+      $q,
+      $timeout,
+      _,
       // generic
-      createSearchThrottle: createSearchThrottle,
-      debouncedThrottle: debouncedThrottle,
-      isNumber: isNumber,
-      logger: logger, // for accessibility
-      replaceLocationUrlGuidWithId: replaceLocationUrlGuidWithId,
-      textContains: textContains,
-      validationClass: validationClass
+      createSearchThrottle,
+      debouncedThrottle,
+      isNumber,
+      logger,
+      // for accessibility
+      replaceLocationUrlGuidWithId,
+      textContains,
+      validationClass,
+      generateRandomKey
     };
 
     return service;
@@ -129,6 +131,14 @@
       }else {
         return 'has-error';
       }
+    }
+
+    /**
+     * generates a random key using node-uuid generator
+     * @returns {String}
+     */
+    function generateRandomKey(){
+      return uuid.v4();
     }
 
   }

@@ -37,12 +37,12 @@ var ProductSchema = new Schema({
   sku: {
     type: String,
     required: true,
-    default: uuid.v1()
+    default: uuid.v4()
   },
   slug: {
     type: String,
     required: true,
-    default: uuid.v1()
+    default: uuid.v4()
   },
   sale_price: {
     type: Number,

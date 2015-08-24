@@ -16,7 +16,7 @@
       controller: fileUploadController,
       controllerAs: 'vm',
       restrict: 'E',
-      scope: true
+      scope: { setFn: '&' }
     };
     return directive;
 
