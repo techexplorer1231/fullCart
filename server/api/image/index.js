@@ -10,7 +10,8 @@ var storage = multer.diskStorage({
     cb(null, './uploads/')
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    cb(null, req.body.original_file_name.split('.', 1) + req.body.random_key + '.' +
+      req.body.original_file_name.split('.', 2)[1]);
   }
 })
 var upload = multer({dest: 'uploads/', storage: storage});
@@ -18,7 +19,7 @@ var cpUpload = upload.single('file');
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
-router.post('/', cpUpload,  controller.create);
+router.post('/', cpUpload, controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);

@@ -6,7 +6,7 @@
     .directive('cartUploadImage', cartUploadImage);
 
   /* @ngInject */
-  function cartUploadImage(FileUploader) {
+  function cartUploadImage() {
     // Usage:
     //
     // Creates:
@@ -14,28 +14,34 @@
     var directive = {
       templateUrl: 'components/cartUploadImage/cartUploadImage.html',
       controller: fileUploadController,
-      controllerAs: 'vm',
       restrict: 'E',
-      scope: { setFn: '&' }
+      scope: {
+        addDetails: '&'
+      }
     };
     return directive;
 
     /* @ngInject */
-    function fileUploadController(FileUploader, common) {
-      /* jshint validthis:true */
-      const vm = this;
-      var uploader = vm.uploader = new FileUploader({
-        url: '/api/images'
+    function fileUploadController($scope, FileUploader, common) {
+      let randomKey = common.generateRandomKey();
+      $scope.addFormDetails = function() {
+        var name = 'New Customer Added by Directive';
+        $scope.addDetails()(name);
+      }
+      let uploader = $scope.uploader = new FileUploader({
+        url: '/api/images',
+        removeAfterUpload: 'true'
+      });
+
+      common.onFleUploadStart($scope, function (data) {
+        if (!uploader.getNotUploadedItems().length) {
+          common.fleUploadComplete($scope, 'no files to upload');
+        } else {
+          $scope.uploader.uploadAll();
+        }
       });
 
       // FILTERS
-
-      uploader.filters.push({
-        name: 'customFilter',
-        fn: function (item /*{File|FileLikeObject}*/, options) {
-          return this.queue.length < 10;
-        }
-      });
       uploader.filters.push({
         name: 'imageFilter',
         fn: function (item /*{File|FileLikeObject}*/, options) {
@@ -45,7 +51,7 @@
       });
 
       // CALLBACKS
-
+      /** Method called to append form data*/
       uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
         common.logger.info('onWhenAddingFileFailed', item, filter, options);
       };
@@ -56,6 +62,11 @@
         common.logger.info('onAfterAddingAll', addedFileItems);
       };
       uploader.onBeforeUploadItem = function (item) {
+        console.log(item);
+        item.formData.push({
+          'random_key': randomKey,
+          'original_file_name': item.file.name
+        });
         common.logger.info('onBeforeUploadItem', item);
       };
       uploader.onProgressItem = function (fileItem, progress) {
@@ -78,6 +89,11 @@
       };
       uploader.onCompleteAll = function () {
         common.logger.info('onCompleteAll');
+        common.fleUploadComplete($scope, 'completed file upload');
+        uploader = new FileUploader({
+          url: '/api/images',
+          removeAfterUpload: 'true'
+        });
       };
 
       common.logger.info('uploader', uploader);

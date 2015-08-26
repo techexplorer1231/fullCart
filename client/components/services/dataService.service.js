@@ -63,6 +63,7 @@
         .then(addProductComplete)
         .catch(function(message) {
           exception.catcher('XHR Failed for addProduct')(message);
+          throw message;
         });
 
       function addProductComplete(data, status, headers, config) {

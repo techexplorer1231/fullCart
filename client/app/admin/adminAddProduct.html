@@ -1,5 +1,5 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
-
+{{vm.product | json}}
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
@@ -20,7 +20,7 @@
         <div class="form-group has-feedback" ng-class="vm.validationClass(form.category.$error)">
           <label>Category</label>
           <select class="form-control" ng-options="category._id as category.title for category in vm.categories"
-                  ng-model="vm.product.parent" name="category" required>
+                  ng-model="vm.product.category" name="category" required>
           </select>
 
           <div ng-messages="form.category.$error">
@@ -169,15 +169,11 @@
           </div>
         </div>
 
-        <cart-upload-image></cart-upload-image>
+        <cart-upload-image add-details="vm.addFormDetails"></cart-upload-image>
 
         <div class="col-xs-12 alert alert-danger animate-validation-error" ng-if="!!vm.errors.other" role="alert">
           <strong>{{ vm.errors.other }}</strong></div>
         <div>
-          <button class="btn btn-primary btn-lg btn-login" type="submit">
-            <!-- ng-disabled="form.$invalid"-->
-            Add Category
-          </button>
         </div>
       </form>
     </div>

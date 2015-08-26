@@ -6,9 +6,9 @@
     .controller('cartAdminAddProductController', cartAdminAddProductController);
 
   /* @ngInject */
-  function cartAdminAddProductController(myConstantService, common, dataservice, exception) {
+  function cartAdminAddProductController($scope, myConstantService, common, dataservice) {
     /* jshint validthis:true */
-    const vm = this;
+    let vm = this;
     vm.categories = [];
     vm.brands = [];
     vm.validationClass = common.validationClass;
@@ -19,6 +19,12 @@
     vm.productStatus = myConstantService.getProductStatus();
     vm.stockStatus = myConstantService.getStockStatus();
     vm.taxBand = myConstantService.getTaxBand();
+    //listen to broadcast event that image upload has completed.
+    common.onFleUploadComplete($scope, addProductDetails);
+    vm.addFormDetails = function (name) {
+      alert(name);
+    };
+
     activate();
     /**
      * function called on page load
@@ -36,7 +42,15 @@
      * @returns {Promise.<Object>}
      */
     function addProduct() {
-      vm.directiveFn = directiveFn;
+      //broadcast message to start uploading images.
+      common.fleUploadStart($scope, 'start file upload');
+    }
+
+    /**
+     * call addProductdetails method after image upload has completed
+     * @returns {Object} Promise
+     */
+    function addProductDetails() {
       return dataservice.addProduct(vm.product)
         .then(function (data) {
           common.logger.info('Product added successfully');

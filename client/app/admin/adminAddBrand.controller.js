@@ -8,7 +8,7 @@
   /* @ngInject */
   function cartAdminAddBrandController(myConstantService, common, dataservice, exception) {
     /* jshint validthis:true */
-    const vm = this;
+    let vm = this;
     vm.validationClass = common.validationClass;
     vm.addBrand = addBrand;
     //fetch brand status from constant service

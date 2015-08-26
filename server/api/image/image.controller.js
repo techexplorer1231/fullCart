@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Image = require('./image.model');
+var mime = require('mime');
 
 // Get list of images
 exports.index = function(req, res) {
@@ -22,8 +23,13 @@ exports.show = function(req, res) {
 
 // Create a single image
 exports.create = function(req, res) {
-  console.log(req.file);
-  res.status(201).end();
+  var body = req.body;
+  body.unique_file_name = req.body.original_file_name.split('.', 1) + req.body.random_key + '.' +
+                          req.body.original_file_name.split('.', 2)[1];
+  Image.create(body, function(err, image) {
+    if (err) { return handleError(res, err); }
+    return res.status(201).json(image);
+  });
 }
 
 // Updates an existing image in the DB.

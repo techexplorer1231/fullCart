@@ -8,7 +8,7 @@
   /* @ngInject */
   function cartAdminAddCategoryController(myConstantService, common, dataservice, exception) {
     /* jshint validthis:true */
-    const vm = this;
+    let vm = this;
     vm.validationClass = common.validationClass;
     vm.addCategory = addCategory;
     //fetch brand status from constant service

@@ -3,7 +3,7 @@
 angular.module('fullCartApp')
   .controller('MainCtrl', function (dataservice, common) {
     /* jshint validthis:true */
-    const vm = this;
+    let vm = this;
     vm.products = [];
     activate();
 

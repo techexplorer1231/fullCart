@@ -6,12 +6,13 @@
     .factory('common', common);
 
   /* @ngInject */
-  function common($location, $q, $rootScope, $timeout, logger, _, uuid) {
-    var throttles = {};
+  function common($location, $q, $timeout, logger, _, uuid) {
+    let throttles = {};
+    let FILE_UPLOAD_MESSAGE_START = 'fileUploadMessage';
+    let FILE_UPLOAD_MESSAGE_COMPLETE = 'fileUploadComplete';
 
-    var service = {
+    let service = {
       // common angular dependencies
-      $broadcast,
       $q,
       $timeout,
       _,
@@ -24,15 +25,16 @@
       replaceLocationUrlGuidWithId,
       textContains,
       validationClass,
-      generateRandomKey
+      generateRandomKey,
+      // for pub sub
+      fleUploadStart,
+      onFleUploadStart,
+      fleUploadComplete,
+      onFleUploadComplete
     };
 
     return service;
     //////////////////////
-
-    function $broadcast() {
-      return $rootScope.$broadcast.apply($rootScope, arguments);
-    }
 
     function createSearchThrottle(viewmodel, list, filteredList, filter, delay) {
       // After a delay, search a viewmodel's list using
@@ -137,8 +139,36 @@
      * generates a random key using node-uuid generator
      * @returns {String}
      */
-    function generateRandomKey(){
+    function generateRandomKey() {
       return uuid.v4();
+    }
+
+    function fleUploadStart(scope, data) {
+      scope.$broadcast(FILE_UPLOAD_MESSAGE_START,
+        {
+          data: data
+        });
+    }
+
+    function onFleUploadStart(scope, handler) {
+      scope.$on(FILE_UPLOAD_MESSAGE_START, function(event, message) {
+        // note that the handler is passed the problem domain parameters
+        handler(message.data);
+      });
+    }
+
+    function fleUploadComplete(scope, data) {
+      scope.$emit(FILE_UPLOAD_MESSAGE_COMPLETE,
+        {
+          data: data
+        });
+    }
+
+    function onFleUploadComplete(scope, handler) {
+      scope.$on(FILE_UPLOAD_MESSAGE_COMPLETE, function(event, message) {
+        // note that the handler is passed the problem domain parameters
+        handler(message.data);
+      });
     }
 
   }

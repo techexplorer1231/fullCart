@@ -1150,6 +1150,11 @@ body{
     padding: 0.2em 0;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
 .animate-validation-error{
   &.ng-enter {
     animation: slideInLeft .5s;

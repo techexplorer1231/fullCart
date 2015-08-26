@@ -9,7 +9,7 @@
   function AdminController($http, Auth, User, common) {
     // Use the User $resource to fetch all users
     /* jshint validthis:true */
-    const vm = this;
+    let vm = this;
     vm.users = User.query();
     activate();
 
