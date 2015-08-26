@@ -19,7 +19,7 @@
 
         <div class="form-group has-feedback" ng-class="vm.validationClass(form.category.$error)">
           <label>Category</label>
-          <select class="form-control" ng-options="category._id as category.title for category in vm.categories"
+          <select class="form-control" ng-options="category.title as category.title for category in vm.categories"
                   ng-model="vm.product.category" name="category" required>
           </select>
 
@@ -93,7 +93,7 @@
 
         <div class="form-group has-feedback" ng-class="vm.validationClass(form.brand.$error)">
           <label>Brand</label>
-          <select class="form-control" ng-options="brand._id as brand.title for brand in vm.brands"
+          <select class="form-control" ng-options="brand.title as brand.title for brand in vm.brands"
                   ng-model="vm.product.brand" name="brand" required>
           </select>
 

@@ -6,8 +6,8 @@ var mongoose = require('mongoose'),
   objectid = Schema.Types.ObjectId;
 
 var ProductSchema = new Schema({
-  brand: objectid,
-  category: objectid,
+  brand: String,
+  category: String,
   /*Choices available are 0 (No), 1 (Yes)*/
   catalog_only: Number,
   collection_group: {},

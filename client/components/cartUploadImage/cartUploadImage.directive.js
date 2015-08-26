@@ -16,27 +16,15 @@
       controller: fileUploadController,
       restrict: 'E',
       scope: {
-        addDetails: '&',
-        randomKeyImage: '='
+        addDetails: '&'
       }
     };
     return directive;
 
     /* @ngInject */
     function fileUploadController($scope, FileUploader, common) {
-      let randomKey = common.generateRandomKey();
       $scope.addFormDetails = activate;
-
-      /**
-       * activate function called to upload images and send data back
-       */
-      function activate() {
-        if (!$scope.uploader.getNotUploadedItems().length) {
-          $scope.addDetails()('');
-        } else {
-          $scope.uploader.uploadAll();
-        }
-      }
+      let randomKey = '';
       //uploader constructor for upload methods and callbacks
       let uploader = $scope.uploader = new FileUploader({
         url: '/api/images',
@@ -51,6 +39,18 @@
           return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
         }
       });
+
+      /**
+       * activate function called to upload images and send data back
+       */
+      function activate() {
+        randomKey = common.generateRandomKey();
+        if (!$scope.uploader.getNotUploadedItems().length) {
+          $scope.addDetails()('');
+        } else {
+          $scope.uploader.uploadAll();
+        }
+      }
 
       // CALLBACKS
       /** Method called to append form data*/
@@ -89,12 +89,7 @@
         common.logger.info('onCompleteItem', fileItem, response, status, headers);
       };
       uploader.onCompleteAll = function () {
-        $scope.randomKeyImage = randomKey;
         $scope.addDetails()(randomKey);
-        uploader = new FileUploader({
-          url: '/api/images',
-          removeAfterUpload: 'true'
-        });
       };
 
       common.logger.info('uploader', uploader);
