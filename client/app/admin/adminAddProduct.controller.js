@@ -12,18 +12,12 @@
     vm.categories = [];
     vm.brands = [];
     vm.validationClass = common.validationClass;
-    vm.addProduct = addProduct;
     //fetch product status from constant service
     vm.catalogOnlyStatus = myConstantService.getCatalogOnlyStatus();
     vm.requiresShipping = myConstantService.getRequiresShipping();
     vm.productStatus = myConstantService.getProductStatus();
     vm.stockStatus = myConstantService.getStockStatus();
     vm.taxBand = myConstantService.getTaxBand();
-    //listen to broadcast event that image upload has completed.
-    common.onFleUploadComplete($scope, addProductDetails);
-    vm.addFormDetails = function (name) {
-      alert(name);
-    };
 
     activate();
     /**
@@ -38,24 +32,17 @@
     }
 
     /**
-     * add call add brands data service with form data
-     * @returns {Promise.<Object>}
-     */
-    function addProduct() {
-      //broadcast message to start uploading images.
-      common.fleUploadStart($scope, 'start file upload');
-    }
-
-    /**
      * call addProductdetails method after image upload has completed
-     * @returns {Object} Promise
+     * @param {String} imageKey randomKey from directive callback with image random key
+     * @returns {Promise.<Object>} promise object
      */
-    function addProductDetails() {
+    vm.addFormDetails = function(imageKey) {
+      vm.product.image = imageKey;
       return dataservice.addProduct(vm.product)
         .then(function (data) {
           common.logger.info('Product added successfully');
         });
-    }
+    };
 
     /**
      * get categories of all the products

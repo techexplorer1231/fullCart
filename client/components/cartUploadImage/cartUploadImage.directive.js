@@ -16,7 +16,8 @@
       controller: fileUploadController,
       restrict: 'E',
       scope: {
-        addDetails: '&'
+        addDetails: '&',
+        randomKeyImage: '='
       }
     };
     return directive;
@@ -24,21 +25,22 @@
     /* @ngInject */
     function fileUploadController($scope, FileUploader, common) {
       let randomKey = common.generateRandomKey();
-      $scope.addFormDetails = function() {
-        var name = 'New Customer Added by Directive';
-        $scope.addDetails()(name);
-      }
-      let uploader = $scope.uploader = new FileUploader({
-        url: '/api/images',
-        removeAfterUpload: 'true'
-      });
+      $scope.addFormDetails = activate;
 
-      common.onFleUploadStart($scope, function (data) {
-        if (!uploader.getNotUploadedItems().length) {
-          common.fleUploadComplete($scope, 'no files to upload');
+      /**
+       * activate function called to upload images and send data back
+       */
+      function activate() {
+        if (!$scope.uploader.getNotUploadedItems().length) {
+          $scope.addDetails()('');
         } else {
           $scope.uploader.uploadAll();
         }
+      }
+      //uploader constructor for upload methods and callbacks
+      let uploader = $scope.uploader = new FileUploader({
+        url: '/api/images',
+        removeAfterUpload: 'true'
       });
 
       // FILTERS
@@ -62,7 +64,6 @@
         common.logger.info('onAfterAddingAll', addedFileItems);
       };
       uploader.onBeforeUploadItem = function (item) {
-        console.log(item);
         item.formData.push({
           'random_key': randomKey,
           'original_file_name': item.file.name
@@ -88,8 +89,8 @@
         common.logger.info('onCompleteItem', fileItem, response, status, headers);
       };
       uploader.onCompleteAll = function () {
-        common.logger.info('onCompleteAll');
-        common.fleUploadComplete($scope, 'completed file upload');
+        $scope.randomKeyImage = randomKey;
+        $scope.addDetails()(randomKey);
         uploader = new FileUploader({
           url: '/api/images',
           removeAfterUpload: 'true'

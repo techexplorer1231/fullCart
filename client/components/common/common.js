@@ -26,11 +26,6 @@
       textContains,
       validationClass,
       generateRandomKey,
-      // for pub sub
-      fleUploadStart,
-      onFleUploadStart,
-      fleUploadComplete,
-      onFleUploadComplete
     };
 
     return service;
@@ -137,39 +132,10 @@
 
     /**
      * generates a random key using node-uuid generator
-     * @returns {String}
+     * @returns {String} random key
      */
     function generateRandomKey() {
       return uuid.v4();
     }
-
-    function fleUploadStart(scope, data) {
-      scope.$broadcast(FILE_UPLOAD_MESSAGE_START,
-        {
-          data: data
-        });
-    }
-
-    function onFleUploadStart(scope, handler) {
-      scope.$on(FILE_UPLOAD_MESSAGE_START, function(event, message) {
-        // note that the handler is passed the problem domain parameters
-        handler(message.data);
-      });
-    }
-
-    function fleUploadComplete(scope, data) {
-      scope.$emit(FILE_UPLOAD_MESSAGE_COMPLETE,
-        {
-          data: data
-        });
-    }
-
-    function onFleUploadComplete(scope, handler) {
-      scope.$on(FILE_UPLOAD_MESSAGE_COMPLETE, function(event, message) {
-        // note that the handler is passed the problem domain parameters
-        handler(message.data);
-      });
-    }
-
   }
 })();
