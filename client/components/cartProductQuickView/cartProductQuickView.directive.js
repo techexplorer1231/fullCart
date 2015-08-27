@@ -15,6 +15,8 @@
       templateUrl: 'components/cartProductQuickView/cartProductQuickView.html',
       controller: cartProductQuickViewController,
       restrict: 'E',
+      controllerAs: 'vm',
+      bindToController: true,
       scope: {
         viewProduct : '@'
       }
@@ -22,20 +24,22 @@
     return directive;
 
     /* @ngInject */
-    function cartProductQuickViewController($scope, $modal) {
-      $scope.productData = angular.fromJson($scope.viewProduct);
+    function cartProductQuickViewController($modal) {
+      /* jshint validthis:true */
+      let vm = this;
+      vm.productData = angular.fromJson(vm.viewProduct);
       /**
        * called on click of quickview button
        */
-      $scope.quickView = function() {
-        console.log($scope.productData);
+      vm.quickView = function() {
         var modalInstance = $modal.open({
           animation: true,
           templateUrl: 'components/cartProductQuickView/cartProductQuickViewModal.html',
           controller: 'cartProductQuickViewModalInstanceController',
+          controllerAs: 'vm',
           resolve: {
             product: function () {
-              return $scope.productData;
+              return vm.productData;
             }
           }
         });

@@ -6,13 +6,15 @@
     .controller('cartProductQuickViewModalInstanceController', cartProductQuickViewModalInstanceController);
 
   /* @ngInject */
-  function cartProductQuickViewModalInstanceController($scope, $modalInstance, product) {
-    $scope.product = product;
-    $scope.ok = function () {
+  function cartProductQuickViewModalInstanceController($modalInstance, product) {
+    /* jshint validthis:true */
+    let vm = this;
+    vm.product = product;
+    vm.ok = function () {
       $modalInstance.close();
     };
 
-    $scope.cancel = function () {
+    vm.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
   }

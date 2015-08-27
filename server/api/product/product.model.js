@@ -27,6 +27,7 @@ var ProductSchema = new Schema({
     type: Number,
     required: true
   },
+  image_array : [],
   title: {
     type: String,
     index: true,

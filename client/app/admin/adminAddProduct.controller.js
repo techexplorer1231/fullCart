@@ -33,11 +33,13 @@
 
     /**
      * call addProductdetails method after image upload has completed
-     * @param {String} imageKey randomKey from directive callback with image random key
-     * @returns {Promise.<Object>} promise object
+     * @param {String} imageKey - randomKey from directive callback with image random key
+     * @param {Array} imageArray - holds list of all images uploaded for given product in one go
+     * @returns {Promise.<Object>} - promise object
      */
-    vm.addFormDetails = function(imageKey) {
+    vm.addFormDetails = function(imageKey, imageArray) {
       vm.product.image = imageKey;
+      vm.product.image_array = imageArray;
       return dataservice.addProduct(vm.product)
         .then(function (data) {
           common.logger.info('Product added successfully');

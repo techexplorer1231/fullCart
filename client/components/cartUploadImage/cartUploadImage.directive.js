@@ -25,6 +25,7 @@
     function fileUploadController($scope, FileUploader, common) {
       $scope.addFormDetails = activate;
       let randomKey = '';
+      let imageArray = [];
       //uploader constructor for upload methods and callbacks
       let uploader = $scope.uploader = new FileUploader({
         url: '/api/images',
@@ -45,8 +46,9 @@
        */
       function activate() {
         randomKey = common.generateRandomKey();
+        imageArray = [];
         if (!$scope.uploader.getNotUploadedItems().length) {
-          $scope.addDetails()('');
+          $scope.addDetails()('', []);
         } else {
           $scope.uploader.uploadAll();
         }
@@ -68,6 +70,11 @@
           'random_key': randomKey,
           'original_file_name': item.file.name
         });
+        imageArray.push({
+          'random_key': randomKey,
+          'original_file_name': item.file.name,
+          'unique_file_name': item.file.name.split('.', 1) + randomKey + '.' + item.file.name.split('.', 2)[1]
+        })
         common.logger.info('onBeforeUploadItem', item);
       };
       uploader.onProgressItem = function (fileItem, progress) {
@@ -89,7 +96,7 @@
         common.logger.info('onCompleteItem', fileItem, response, status, headers);
       };
       uploader.onCompleteAll = function () {
-        $scope.addDetails()(randomKey);
+        $scope.addDetails()(randomKey, imageArray);
       };
 
       common.logger.info('uploader', uploader);
