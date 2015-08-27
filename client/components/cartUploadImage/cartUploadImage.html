@@ -5,11 +5,6 @@
     <h3>Select files</h3>
 
     <div ng-show="uploader.isHTML5">
-      <!-- 3. nv-file-over uploader="link" over-class="className" -->
-      <div class="well my-drop-zone" nv-file-over="" uploader="uploader">
-        Base drop zone
-      </div>
-
       <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
       <div nv-file-drop="" uploader="uploader">
         <div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
@@ -67,18 +62,6 @@
           <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
         </div>
       </div>
-      <!--<button type="button" class="btn btn-success btn-s col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-click="uploader.uploadAll()"
-              ng-disabled="!uploader.getNotUploadedItems().length">
-        <span class="glyphicon glyphicon-upload"></span> Upload all
-      </button>
-      <button type="button" class="btn btn-warning btn-s col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-click="uploader.cancelAll()"
-              ng-disabled="!uploader.isUploading">
-        <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-      </button>
-      <button type="button" class="btn btn-danger btn-s col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-click="uploader.clearQueue()"
-              ng-disabled="!uploader.queue.length">
-        <span class="glyphicon glyphicon-trash"></span> Remove all
-      </button>-->
     </div>
 
   </div>

@@ -13,19 +13,23 @@ var ProductSchema = new Schema({
   collection_group: {},
   description: {
     type: String,
-    required: true
+    required: true,
+    min: 0
   },
   depth: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   height: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   image_array : [],
   title: {
@@ -53,7 +57,8 @@ var ProductSchema = new Schema({
   status: Number,
   stock_level: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   /*Choices available are 0 (Unlimited), 1 (In Stock), 2 (Low Stock), 3 (Out Of Stock), 4 (More Stock Ordered), 5 (Discontinued)*/
   stock_status: Number,
@@ -61,11 +66,13 @@ var ProductSchema = new Schema({
   tax_band: Number,
   weight: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   width: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   image: String
 });
