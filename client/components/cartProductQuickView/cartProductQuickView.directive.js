@@ -34,7 +34,7 @@
       vm.quickView = function() {
         var modalInstance = $modal.open({
           animation: true,
-          templateUrl: 'components/cartProductQuickView/cartProductQuickViewModal.html',
+          templateUrl: 'components/cartProductQuickView/cartProductQuickViewModalInstance.html',
           controller: 'cartProductQuickViewModalInstanceController',
           controllerAs: 'vm',
           resolve: {
